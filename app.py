@@ -13,8 +13,9 @@ from sqlalchemy_utils import database_exists, create_database
 
 from data.db import database
 from data.repositories.user_repository import UserRepository
-from resources import UserBlueprint
 from services.user_service import UserService
+
+from resources import UserBlueprint
 
 
 def create_app():
@@ -36,6 +37,10 @@ def create_app():
     app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
     app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
 
+    # Flask-smorest extension wrapping
+    api = Api(app)
+    api.register_blueprint(UserBlueprint)
+
     # Sqlalchemy
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -51,11 +56,6 @@ def create_app():
     # Database migration
     migrate = Migrate(app, database)
 
-    # Flask-smorest extension wrapping
-    api = Api(app)
-
-    api.register_blueprint(UserBlueprint)
-
     # JWT - Will set on code for now for developing purposes
     app.config['JWT_SECRET_KEY'] = "255173194567594702208572596592176805026"
     jwt = JWTManager(app)
@@ -70,5 +70,7 @@ def create_app():
         binder.bind(UserService, UserService(UserRepository()))
 
     FlaskInjector(app=app, modules=[configure])
+
+
 
     return app
