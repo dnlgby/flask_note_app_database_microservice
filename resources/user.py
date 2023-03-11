@@ -15,5 +15,7 @@ class UserRegisterView(MethodView):
     def __init__(self, user_service: UserService):
         self._user_service = user_service
 
-    def post(self, user_data):
-        self._user_service.login(user_data["username"], user_data["password"])
+    #def post(self, user_data: dict):
+    def post(self):
+        #self._user_service.login(user_data["username"], user_data["password"])
+        print(self._user_service)

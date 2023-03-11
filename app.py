@@ -2,27 +2,23 @@
 
 import os
 
+from dotenv import load_dotenv
 from flask import Flask
 from flask_injector import FlaskInjector
-from injector import Injector, singleton
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
+from flask_smorest import Api
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
-from flask_smorest import Api
-from dotenv import load_dotenv
 
 from data.db import database
-from di.module import UserRepositoryModule, UserServiceModule
-
+from data.repositories.user_repository import UserRepository
 from resources import UserBlueprint
+from services.user_service import UserService
 
 
 def create_app():
-    # Initialize the injector
-    injector = Injector([UserRepositoryModule, UserServiceModule])
     app = Flask(__name__)
-    FlaskInjector(app=app, injector=injector)
 
     # Load environment variables from existing '.env' files
     load_dotenv()
@@ -57,6 +53,7 @@ def create_app():
 
     # Flask-smorest extension wrapping
     api = Api(app)
+
     api.register_blueprint(UserBlueprint)
 
     # JWT - Will set on code for now for developing purposes
@@ -66,5 +63,12 @@ def create_app():
     # Initialize database tables before first request
     with app.app_context():
         database.create_all()
+
+    # Configure the application's dependency injection
+    def configure(binder):
+        binder.bind(UserRepository, UserRepository())
+        binder.bind(UserService, UserService(UserRepository()))
+
+    FlaskInjector(app=app, modules=[configure])
 
     return app

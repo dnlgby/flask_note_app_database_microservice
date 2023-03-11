@@ -13,4 +13,4 @@ class UserRepositoryModule(Module):
 
 class UserServiceModule(Module):
     def configure(self, binder):
-        binder.bind(UserService, to=UserService(singleton(UserRepository)))
+        binder.bind(UserService, to=UserService)

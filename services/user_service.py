@@ -1,7 +1,7 @@
 #  Copyright (c) 2023 Daniel Gabay
 
-from flask_injector import inject
 from flask_jwt_extended import create_access_token
+from injector import inject
 from passlib.hash import pbkdf2_sha256
 
 from data.repositories.user_repository import UserRepository
@@ -11,7 +11,7 @@ from exceptions.services import InvalidCredentialsException
 
 class UserService:
 
-
+    @inject
     def __init__(self, user_repository: UserRepository):
         self._user_repository = user_repository
 
