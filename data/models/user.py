@@ -1,0 +1,12 @@
+#  Copyright (c) 2023 Daniel Gabay
+
+from data.db import database
+from data.models.models_constants import ModelsConstants as Consts
+
+
+class UserModel(database.Model):
+    __tablename__ = "users"
+
+    id = database.Column(database.Integer, primary_key=True, autoincrement=True)
+    username = database.Column(database.String(Consts.UserModel.USER_NAME_MAX_LENGTH), unique=True, nullable=False)
+    password = database.Column(database.String(Consts.UserModel.PASSWORD_MAX_LENGTH), nullable=False)
