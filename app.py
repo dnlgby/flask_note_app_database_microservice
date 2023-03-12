@@ -14,7 +14,7 @@ from sqlalchemy_utils import database_exists, create_database
 from data.db import database
 from di.note_module import NoteModule
 from di.user_module import UserModule
-from resources import UserBlueprint
+from resources import UserBlueprint, NoteBlueprint
 
 
 def create_app():
@@ -39,8 +39,9 @@ def create_app():
     # Flask-smorest documentation
     api = Api(app)
     api.register_blueprint(UserBlueprint)
+    api.register_blueprint(NoteBlueprint)
 
-    # ORM setup (Sqlalchemy)
+    # ORM setup (SqlAlchemy)
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     if app.config["SQLALCHEMY_DATABASE_URI"] is None:
@@ -52,7 +53,7 @@ def create_app():
     if not database_exists(engine.url):
         create_database(engine.url)
 
-    # Database migration
+    # Database migration setup
     migrate = Migrate(app, database)
 
     # JWT - Will set on code for now for developing purposes

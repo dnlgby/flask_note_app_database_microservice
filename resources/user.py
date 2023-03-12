@@ -15,7 +15,7 @@ blp = Blueprint("users", __name__, description="User operations")
 
 
 @blp.route("/user")
-class UserCreationView(MethodView):
+class UserView(MethodView):
 
     @inject
     def __init__(self, user_service: UserService):
@@ -23,7 +23,7 @@ class UserCreationView(MethodView):
         self._user_service = user_service
 
     @blp.arguments(UserSchema)
-    @blp.response(200, UserSchema)
+    @blp.response(HTTPStatus.OK, UserSchema)
     def get(self, user_data: dict) -> UserModel:
         try:
             return self._user_service.get_user(user_data["username"])
@@ -31,6 +31,6 @@ class UserCreationView(MethodView):
             abort(HTTPStatus.NOT_FOUND, message="User is not exist.")
 
     @blp.arguments(UserSchema)
-    @blp.response(200, UserSchema)
+    @blp.response(HTTPStatus.OK, UserSchema)
     def post(self, user_data: dict) -> UserModel:
         return self._user_service.create_user(**user_data)

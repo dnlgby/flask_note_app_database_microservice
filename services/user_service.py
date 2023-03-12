@@ -13,7 +13,7 @@ class UserService:
         self._user_repository = user_repository
 
     def get_user(self, username: str) -> UserModel:
-        return self._user_repository.get_user_by_name(username)
+        return self._user_repository.get_user_by_name(username=username)
 
     def create_user(self, username: str, password: str) -> UserModel:
-        return self._user_repository.create_user(username, password)
+        return self._user_repository.create_user(username=username, password=password)
