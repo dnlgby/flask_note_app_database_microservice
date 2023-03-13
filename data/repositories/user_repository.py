@@ -23,9 +23,9 @@ class UserRepository:
 
     @staticmethod
     def validate_user(username: str, password: str) -> None:
-        hashed_password = pbkdf2_sha256.hash(password)
         user = UserModel.query.filter_by(username=username).first()
         if not user:
             raise ItemNotFoundException("User with the name {username} is not found.".format(username=username))
-        if user.password != hashed_password:
-            raise ValidationException("Incorrect password for user {username}".format(username=username))
+        if not pbkdf2_sha256.verify(password, user.password):
+            raise ValidationException(
+                "Incorrect password for user {username} ".format(username=username))
