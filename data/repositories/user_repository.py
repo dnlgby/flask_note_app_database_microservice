@@ -1,4 +1,4 @@
-#  Copyright (c) 2023 Daniel Gabay
+# Copyright (c) 2023 Daniel Gabay
 
 from passlib.hash import pbkdf2_sha256
 from sqlalchemy.exc import IntegrityError

@@ -1,4 +1,4 @@
-#  Copyright (c) 2023 Daniel Gabay
+# Copyright (c) 2023 Daniel Gabay
 
 from exceptions.database_service_exception import DatabaseServiceException
 

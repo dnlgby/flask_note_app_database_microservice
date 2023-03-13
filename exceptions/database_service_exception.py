@@ -1,4 +1,4 @@
-#  Copyright (c) 2023 Daniel Gabay
+# Copyright (c) 2023 Daniel Gabay
 
 class DatabaseServiceException(Exception):
     def __init__(self, message):
