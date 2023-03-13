@@ -23,10 +23,10 @@ class UserView(MethodView):
         self._user_service = user_service
 
     @blp.arguments(UserSchema)
-    @blp.response(HTTPStatus.OK, UserSchema)
+    @blp.response(HTTPStatus.NO_CONTENT, UserSchema)
     @view_exception_handler
-    def get(self, user_data: dict) -> UserModel:
-        return self._user_service.get_user(user_data["username"])
+    def get(self, user_data: dict) -> None:
+        self._user_service.validate_user(**user_data)
 
     @blp.arguments(UserSchema)
     @blp.response(HTTPStatus.OK, UserSchema)

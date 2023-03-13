@@ -1,11 +1,13 @@
 #  Copyright (c) 2023 Daniel Gabay
 
 from http import HTTPStatus
+from typing import List
 
 from flask.views import MethodView
 from flask_injector import inject
 from flask_smorest import Blueprint
 
+from data.models.notes import NoteModel
 from data.models.user import UserModel
 from decorators import view_exception_handler
 from schemes import NoteSchema, NoteUpdateSchema
@@ -51,5 +53,5 @@ class NoteListView(NoteView):
         return self._note_service.create_note(**note_data)
 
     @blp.response(HTTPStatus.OK, NoteSchema(many=True))
-    def get(self):
+    def get(self) -> List[NoteModel]:
         return self._note_service.get_all_notes()

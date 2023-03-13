@@ -17,5 +17,7 @@ def view_exception_handler(f):
             abort(HTTPStatus.NOT_FOUND, message=str(ex))
         except DatabaseViolationException as ex:
             abort(HTTPStatus.INTERNAL_SERVER_ERROR, message=str(ex))
+        except ValidationException as ex:
+            abort(HTTPStatus.UNAUTHORIZED, message=str(ex))
 
     return decorated_function

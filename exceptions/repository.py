@@ -19,3 +19,8 @@ class ItemNotFoundException(RepositoryException):
 class DatabaseViolationException(RepositoryException):
     def __str__(self):
         return f"DatabaseViolationException: {self.message}"
+
+
+class ValidationException(RepositoryException):
+    def __str__(self):
+        return f"ValidationException: {self.message}"

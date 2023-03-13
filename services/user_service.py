@@ -12,8 +12,8 @@ class UserService:
     def __init__(self, user_repository: UserRepository):
         self._user_repository = user_repository
 
-    def get_user(self, username: str) -> UserModel:
-        return self._user_repository.get_user_by_name(username=username)
+    def validate_user(self, username: str, password: str) -> None:
+        return self._user_repository.validate_user(username=username, password=password)
 
     def create_user(self, username: str, password: str) -> UserModel:
         return self._user_repository.create_user(username=username, password=password)
