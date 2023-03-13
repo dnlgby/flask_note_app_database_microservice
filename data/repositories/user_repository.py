@@ -1,17 +1,22 @@
 #  Copyright (c) 2023 Daniel Gabay
 
+from sqlalchemy.exc import IntegrityError
+
 from data.db import database
 from data.models.user import UserModel
-from exceptions.repository import ItemNotFoundException
+from exceptions.repository import ItemNotFoundException, DatabaseViolationException
 
 
 class UserRepository:
 
     @staticmethod
     def create_user(username: str, password: str) -> UserModel:
-        new_user = UserModel(username=username, password=password)
-        database.session.add(new_user)
-        database.session.commit()
+        try:
+            new_user = UserModel(username=username, password=password)
+            database.session.add(new_user)
+            database.session.commit()
+        except IntegrityError:
+            raise DatabaseViolationException("User with that name is already exist.")
         return new_user
 
     @staticmethod

@@ -40,6 +40,7 @@ class NoteRepository:
             note.note_content = note_content
             database.session.add(note)
             database.session.commit()
+            return note
         else:
             raise ItemNotFoundException("Note with the id {note_id} is not found.".format(note_id=note_id))
 

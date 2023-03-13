@@ -10,6 +10,11 @@ class NoteSchema(Schema):
     note_content = fields.String(required=True)
 
 
+class NoteUpdateSchema(Schema):
+    note_title = fields.String(required=True)
+    note_content = fields.String(required=True)
+
+
 class UserSchema(Schema):
     id = fields.Int(dump_only=True)
     username = fields.String(required=True)

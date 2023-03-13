@@ -8,7 +8,7 @@ from flask_smorest import Blueprint
 
 from data.models.user import UserModel
 from decorators import view_exception_handler
-from schemes import NoteSchema
+from schemes import NoteSchema, NoteUpdateSchema
 from services.note_service import NoteService
 
 blp = Blueprint("notes", __name__, description="Notes operations")
@@ -29,14 +29,11 @@ class NoteItemView(NoteView):
     def get(self, note_id: int) -> UserModel:
         return self._note_service.get_note(note_id=note_id)
 
-    @blp.arguments(NoteSchema)
+    @blp.arguments(NoteUpdateSchema)
     @blp.response(HTTPStatus.OK, NoteSchema)
     @view_exception_handler
-    def put(self, note_data: dict, note_id: int) -> UserModel:
-        return self._note_service.update_note(
-            note_id=note_id,
-            note_title=note_data["note_title"],
-            note_content=note_data["note_content"])
+    def patch(self, note_data: dict, note_id: int) -> UserModel:
+        return self._note_service.update_note(note_id=note_id, **note_data)
 
     @blp.response(HTTPStatus.NO_CONTENT)
     @view_exception_handler
