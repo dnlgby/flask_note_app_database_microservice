@@ -5,6 +5,7 @@ from http import HTTPStatus
 
 from flask_smorest import abort
 
+from exceptions.model import *
 from exceptions.repository import *
 
 
@@ -13,11 +14,13 @@ def view_exception_handler(f):
     def decorated_function(*args, **kwargs):
         try:
             return f(*args, **kwargs)
+        except DatabaseValidationError as err:
+            abort(HTTPStatus.BAD_REQUEST, message=err.message)
         except ItemNotFoundException as ex:
-            abort(HTTPStatus.NOT_FOUND, message=str(ex))
-        except DatabaseViolationException as ex:
-            abort(HTTPStatus.INTERNAL_SERVER_ERROR, message=str(ex))
-        except ValidationException as ex:
-            abort(HTTPStatus.UNAUTHORIZED, message=str(ex))
+            abort(HTTPStatus.NOT_FOUND, message=ex.message)
+        except ItemAlreadyExistException as ex:
+            abort(HTTPStatus.CONFLICT, message=ex.message)
+        except PasswordMatchError as ex:
+            abort(HTTPStatus.UNAUTHORIZED, message=ex.message)
 
     return decorated_function

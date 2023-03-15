@@ -7,4 +7,3 @@ FLASK_APP=app
 # Set the environment to a developing environment.
 # For example, it will restart the app after each change - So we wont do it manually.
 FLASK_DEBUG=1
-

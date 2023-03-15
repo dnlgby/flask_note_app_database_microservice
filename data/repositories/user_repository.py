@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 
 from data.db import database
 from data.models.user import UserModel
-from exceptions.repository import ItemNotFoundException, DatabaseViolationException, ValidationException
+from exceptions.repository import ItemNotFoundException, PasswordMatchError, ItemAlreadyExistException
 
 
 class UserRepository:
@@ -18,7 +18,9 @@ class UserRepository:
             database.session.add(new_user)
             database.session.commit()
         except IntegrityError:
-            raise DatabaseViolationException("User with that name is already exist.")
+            database.session.rollback()
+            raise ItemAlreadyExistException("User with that name is already exist.")
+
         return new_user
 
     @staticmethod
@@ -27,5 +29,5 @@ class UserRepository:
         if not user:
             raise ItemNotFoundException("User with the name {username} is not found.".format(username=username))
         if not pbkdf2_sha256.verify(password, user.password):
-            raise ValidationException(
+            raise PasswordMatchError(
                 "Incorrect password for user {username} ".format(username=username))

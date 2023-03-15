@@ -16,11 +16,11 @@ class ItemNotFoundException(RepositoryException):
         return f"ItemNotFoundException: {self.message}"
 
 
-class DatabaseViolationException(RepositoryException):
+class ItemAlreadyExistException(RepositoryException):
     def __str__(self):
-        return f"DatabaseViolationException: {self.message}"
+        return f"ItemAlreadyExistException: {self.message}"
 
 
-class ValidationException(RepositoryException):
+class PasswordMatchError(RepositoryException):
     def __str__(self):
-        return f"ValidationException: {self.message}"
+        return f"PasswordMatchError: {self.message}"

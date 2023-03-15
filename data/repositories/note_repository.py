@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 
 from data.db import database
 from data.models.notes import NoteModel
-from exceptions.repository import ItemNotFoundException, DatabaseViolationException
+from exceptions.repository import ItemNotFoundException
 
 
 class NoteRepository:
@@ -29,11 +29,12 @@ class NoteRepository:
             database.session.add(new_note)
             database.session.commit()
         except IntegrityError:
-            raise DatabaseViolationException("User with the id {user_id} is not found.".format(user_id=user_id))
+            database.session.rollback()
+            raise ItemNotFoundException("User with the id {user_id} is not found.".format(user_id=user_id))
         return new_note
 
     @staticmethod
-    def update_note(note_id: int, note_title: str, note_content: str):
+    def update_note(note_id: int, note_title: str, note_content: str) -> NoteModel:
         note = NoteModel.query.get(note_id)
         if note:
             note.note_title = note_title
@@ -42,13 +43,15 @@ class NoteRepository:
             database.session.commit()
             return note
         else:
+            database.session.rollback()
             raise ItemNotFoundException("Note with the id {note_id} is not found.".format(note_id=note_id))
 
     @staticmethod
-    def delete_note(note_id: int):
+    def delete_note(note_id: int) -> None:
         note = NoteModel.query.get(note_id)
         if note:
             database.session.delete(note)
             database.session.commit()
         else:
+            database.session.rollback()
             raise ItemNotFoundException("Note with the id {note_id} is not found.".format(note_id=note_id))
