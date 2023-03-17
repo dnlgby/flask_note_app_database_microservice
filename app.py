@@ -57,7 +57,11 @@ def create_app():
     migrate = Migrate(app, database)
 
     # JWT - Will set on code for now for developing purposes
-    app.config['JWT_SECRET_KEY'] = "255173194567594702208572596592176805026"
+    secret_key = os.getenv('JWT_SECRET_KEY')
+    if secret_key is None:
+        raise ValueError("The JWT_SECRET_KEY environment variable must be set")
+
+    app.config['JWT_SECRET_KEY'] = secret_key
     jwt = JWTManager(app)
 
     # Initialize database tables before first request

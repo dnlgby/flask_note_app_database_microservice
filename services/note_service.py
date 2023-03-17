@@ -24,9 +24,9 @@ class NoteService:
         return self._note_repository.create_note(
             user_id=user_id, note_title=note_title, note_content=note_content)
 
-    def update_note(self, note_id: int, note_title: str, note_content: str):
+    def update_note(self, note_id: int, note_title: str, note_content: str) -> NoteModel:
         return self._note_repository.update_note(
             note_id=note_id, note_title=note_title, note_content=note_content)
 
-    def delete_note(self, note_id: int):
+    def delete_note(self, note_id: int) -> None:
         self._note_repository.delete_note(note_id)
