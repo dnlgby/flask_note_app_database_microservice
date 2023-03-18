@@ -1,4 +1,4 @@
-#  Copyright (c) 2023 Daniel Gabay
+# Copyright (c) 2023 Daniel Gabay
 
 import unittest
 from http import HTTPStatus
