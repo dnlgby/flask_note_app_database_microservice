@@ -1,12 +1,12 @@
-# Copyright (c) 2023 Daniel Gabay
+#  Copyright (c) 2023 Daniel Gabay
 
 from functools import wraps
 from http import HTTPStatus
 
 from flask_smorest import abort
 
-from exceptions.model import *
-from exceptions.repository import *
+from app.exceptions.model import *
+from app.exceptions.repository import *
 
 
 def view_exception_handler(f):

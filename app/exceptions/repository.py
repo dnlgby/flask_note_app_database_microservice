@@ -1,6 +1,6 @@
 # Copyright (c) 2023 Daniel Gabay
 
-from exceptions.database_service_exception import DatabaseServiceException
+from app.exceptions.database_service_exception import DatabaseServiceException
 
 
 class RepositoryException(DatabaseServiceException):

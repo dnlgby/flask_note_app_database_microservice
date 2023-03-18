@@ -2,9 +2,9 @@
 
 from sqlalchemy.orm import validates
 
-from data.db import database
-from data.models.models_constants import ModelsConstants as Consts
-from exceptions.model import DatabaseValidationError
+from app.data.db import database
+from app.data.models.models_constants import ModelsConstants as Consts
+from app.exceptions.model import DatabaseValidationError
 
 
 class UserModel(database.Model):

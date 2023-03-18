@@ -2,8 +2,8 @@
 
 from injector import singleton, Module
 
-from data.repositories.note_repository import NoteRepository
-from services.note_service import NoteService
+from app.data.repositories.note_repository import NoteRepository
+from app.services.note_service import NoteService
 
 
 class NoteModule(Module):

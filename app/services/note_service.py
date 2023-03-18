@@ -4,8 +4,8 @@ from typing import List
 
 from injector import inject
 
-from data.models.notes import NoteModel
-from data.repositories.note_repository import NoteRepository
+from app.data.models.notes import NoteModel
+from app.data.repositories.note_repository import NoteRepository
 
 
 class NoteService:

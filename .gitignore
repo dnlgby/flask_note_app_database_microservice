@@ -32,4 +32,4 @@ lib/
 include/
 
 # Migration files
-/migrations
+/app/migrations

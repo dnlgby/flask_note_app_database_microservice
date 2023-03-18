@@ -3,9 +3,9 @@
 from passlib.hash import pbkdf2_sha256
 from sqlalchemy.exc import IntegrityError
 
-from data.db import database
-from data.models.user import UserModel
-from exceptions.repository import ItemNotFoundException, PasswordMatchError, ItemAlreadyExistException
+from app.data.db import database
+from app.data.models.user import UserModel
+from app.exceptions.repository import ItemNotFoundException, PasswordMatchError, ItemAlreadyExistException
 
 
 class UserRepository:

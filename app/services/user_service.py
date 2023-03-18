@@ -2,8 +2,8 @@
 
 from injector import inject
 
-from data.models.user import UserModel
-from data.repositories.user_repository import UserRepository
+from app.data.models.user import UserModel
+from app.data.repositories.user_repository import UserRepository
 
 
 class UserService:

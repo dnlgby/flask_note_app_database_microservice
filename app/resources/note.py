@@ -7,11 +7,11 @@ from flask.views import MethodView
 from flask_injector import inject
 from flask_smorest import Blueprint
 
-from data.models.notes import NoteModel
-from data.models.user import UserModel
-from decorators import view_exception_handler
-from schemes import NoteSchema, NoteUpdateSchema
-from services.note_service import NoteService
+from app.data.models.notes import NoteModel
+from app.data.models.user import UserModel
+from app.decorators import view_exception_handler
+from app.schemes import NoteSchema, NoteUpdateSchema
+from app.services.note_service import NoteService
 
 blp = Blueprint("notes", __name__, description="Notes operations")
 

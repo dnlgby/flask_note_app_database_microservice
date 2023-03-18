@@ -1,4 +1,4 @@
-# Copyright (c) 2023 Daniel Gabay
+#  Copyright (c) 2023 Daniel Gabay
 
 import os
 
@@ -11,10 +11,10 @@ from flask_smorest import Api
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
 
-from data.db import database
-from di.note_module import NoteModule
-from di.user_module import UserModule
-from resources import UserBlueprint, NoteBlueprint
+from app.data.db import database
+from app.di.note_module import NoteModule
+from app.di.user_module import UserModule
+from app.resources import UserBlueprint, NoteBlueprint
 
 
 def create_app():

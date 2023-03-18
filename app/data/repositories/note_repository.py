@@ -4,9 +4,9 @@ from typing import List
 
 from sqlalchemy.exc import IntegrityError
 
-from data.db import database
-from data.models.notes import NoteModel
-from exceptions.repository import ItemNotFoundException
+from app.data.db import database
+from app.data.models.notes import NoteModel
+from app.exceptions.repository import ItemNotFoundException
 
 
 class NoteRepository:

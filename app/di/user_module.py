@@ -2,8 +2,8 @@
 
 from injector import singleton, Module
 
-from data.repositories.user_repository import UserRepository
-from services.user_service import UserService
+from app.data.repositories.user_repository import UserRepository
+from app.services.user_service import UserService
 
 
 class UserModule(Module):

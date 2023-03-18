@@ -6,10 +6,10 @@ from flask.views import MethodView
 from flask_injector import inject
 from flask_smorest import Blueprint
 
-from data.models.user import UserModel
-from decorators import view_exception_handler
-from schemes import UserSchema
-from services.user_service import UserService
+from app.data.models.user import UserModel
+from app.decorators import view_exception_handler
+from app.schemes import UserSchema
+from app.services.user_service import UserService
 
 blp = Blueprint("users", __name__, description="User operations")
 
