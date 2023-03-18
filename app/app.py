@@ -20,8 +20,12 @@ from app.resources import UserBlueprint, NoteBlueprint
 def create_app():
     app = Flask(__name__)
 
-    # Load environment variables from existing '.env' files
-    load_dotenv()
+    # Load environment variables from existing '.env' & '.flaskenv' files
+    dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+    load_dotenv(dotenv_path)
+
+    flaskenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.flaskenv')
+    load_dotenv(flaskenv_path)
 
     # Flask
     app.config["PROPOGATE_EXCEPTION"] = True
