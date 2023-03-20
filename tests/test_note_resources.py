@@ -1,23 +1,30 @@
 # Copyright (c) 2023 Daniel Gabay
 
+import os
 import unittest
 from http import HTTPStatus
 
 from flask import json
 
 from app import app
+from tests.test_config import TEST_DATABASE_URL
 
 
 class NoteResourcesTests(unittest.TestCase):
 
     def setUp(self):
-        self._app = app.create_app().test_client()
+        self._app = app.create_app(TEST_DATABASE_URL).test_client()
         self._note_test_payload = {
             'user_id': 1,
             'note_title': "note_title",
             'note_content': "note_content"
         }
         self._note = self.create_note()
+
+    def tearDown(self):
+        test_db_path = TEST_DATABASE_URL.replace('sqlite:///', '')
+        if os.path.exists(test_db_path):
+            os.remove(test_db_path)
 
     def create_note(self):
         response = self._app.post(

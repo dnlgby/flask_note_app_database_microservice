@@ -17,7 +17,7 @@ from app.di.user_module import UserModule
 from app.resources import UserBlueprint, NoteBlueprint
 
 
-def create_app():
+def create_app(database_url=None):
     app = Flask(__name__)
 
     # Load environment variables from existing '.env' & '.flaskenv' files
@@ -46,7 +46,7 @@ def create_app():
     api.register_blueprint(NoteBlueprint)
 
     # ORM setup (SqlAlchemy)
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_url or os.getenv("DATABASE_URL")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     if app.config["SQLALCHEMY_DATABASE_URI"] is None:
         raise ValueError("'DATABASE_URL' environment variable is not set")

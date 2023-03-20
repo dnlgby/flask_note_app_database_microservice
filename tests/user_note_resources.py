@@ -1,5 +1,6 @@
 # Copyright (c) 2023 Daniel Gabay
 
+import os
 import random
 import string
 import unittest
@@ -8,6 +9,7 @@ from http import HTTPStatus
 from flask import json
 
 from app import app
+from tests.test_config import TEST_DATABASE_URL
 
 
 def generate_random_string(length):
@@ -24,8 +26,13 @@ class UserResourcesTests(unittest.TestCase):
         }
 
     def setUp(self):
-        self._app = app.create_app().test_client()
+        self._app = app.create_app(TEST_DATABASE_URL).test_client()
         self._user = self.create_user()
+
+    def tearDown(self):
+        test_db_path = TEST_DATABASE_URL.replace('sqlite:///', '')
+        if os.path.exists(test_db_path):
+            os.remove(test_db_path)
 
     def create_user(self):
         response = self._app.post(
