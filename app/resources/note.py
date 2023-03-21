@@ -28,13 +28,13 @@ class NoteItemView(NoteView):
 
     @blp.response(HTTPStatus.OK, NoteSchema)
     @view_exception_handler
-    def get(self, note_id: int) -> UserModel:
+    def get(self, note_id: int) -> NoteModel:
         return self._note_service.get_note(note_id=note_id)
 
     @blp.arguments(NoteUpdateSchema)
     @blp.response(HTTPStatus.OK, NoteSchema)
     @view_exception_handler
-    def patch(self, note_data: dict, note_id: int) -> UserModel:
+    def patch(self, note_data: dict, note_id: int) -> NoteModel:
         return self._note_service.update_note(note_id=note_id, **note_data)
 
     @blp.response(HTTPStatus.NO_CONTENT)
@@ -52,6 +52,9 @@ class NoteListView(NoteView):
     def post(self, note_data: dict) -> UserModel:
         return self._note_service.create_note(**note_data)
 
+
+@blp.route("/note/user/<int:user_id>")
+class NoteListView(NoteView):
     @blp.response(HTTPStatus.OK, NoteSchema(many=True))
-    def get(self) -> List[NoteModel]:
-        return self._note_service.get_all_notes()
+    def get(self, user_id: int) -> List[NoteModel]:
+        return self._note_service.get_user_id_notes(user_id=user_id)

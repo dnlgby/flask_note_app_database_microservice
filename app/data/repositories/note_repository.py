@@ -12,8 +12,8 @@ from app.exceptions.repository import ItemNotFoundException
 class NoteRepository:
 
     @staticmethod
-    def get_all_notes() -> List[NoteModel]:
-        return NoteModel.query.all()
+    def get_user_id_notes(user_id: int) -> List[NoteModel]:
+        return NoteModel.query.filter_by(user_id=user_id).all()
 
     @staticmethod
     def get_note_by_id(note_id: int) -> NoteModel:
