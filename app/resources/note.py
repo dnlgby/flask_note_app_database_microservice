@@ -56,5 +56,6 @@ class NoteListView(NoteView):
 @blp.route("/note/user/<int:user_id>")
 class NoteListView(NoteView):
     @blp.response(HTTPStatus.OK, NoteSchema(many=True))
+    @view_exception_handler
     def get(self, user_id: int) -> List[NoteModel]:
         return self._note_service.get_user_id_notes(user_id=user_id)

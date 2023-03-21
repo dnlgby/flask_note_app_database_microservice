@@ -13,7 +13,10 @@ class NoteRepository:
 
     @staticmethod
     def get_user_id_notes(user_id: int) -> List[NoteModel]:
-        return NoteModel.query.filter_by(user_id=user_id).all()
+        notes = NoteModel.query.filter_by(user_id=user_id).all()
+        if not notes:
+            raise ItemNotFoundException("Cannot find notes for user id {user_id}.".format(user_id=user_id))
+        return notes
 
     @staticmethod
     def get_note_by_id(note_id: int) -> NoteModel:
