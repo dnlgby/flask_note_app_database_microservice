@@ -1,22 +1,22 @@
 # Copyright (c) 2023 Daniel Gabay
 
-from typing import List
-
+from flask_sqlalchemy import Pagination
 from sqlalchemy.exc import IntegrityError
 
 from app.data.db import database
-from app.data.models.notes import NoteModel
+from app.data.models.note import NoteModel
 from app.exceptions.repository import ItemNotFoundException
 
 
 class NoteRepository:
 
     @staticmethod
-    def get_user_id_notes(user_id: int) -> List[NoteModel]:
-        notes = NoteModel.query.filter_by(user_id=user_id).all()
-        if not notes:
+    def get_user_id_notes(user_id: int, page: int, per_page: int) -> Pagination:
+        notes_query = NoteModel.query.filter_by(user_id=user_id) \
+            .paginate(page=page, per_page=per_page, error_out=False)
+        if notes_query.total == 0:
             raise ItemNotFoundException("Cannot find notes for user id {user_id}.".format(user_id=user_id))
-        return notes
+        return notes_query
 
     @staticmethod
     def get_note_by_id(note_id: int) -> NoteModel:

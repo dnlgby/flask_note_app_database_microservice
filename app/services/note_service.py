@@ -4,7 +4,7 @@ from typing import List
 
 from injector import inject
 
-from app.data.models.notes import NoteModel
+from app.data.models.note import NoteModel
 from app.data.repositories.note_repository import NoteRepository
 
 
@@ -14,8 +14,8 @@ class NoteService:
     def __init__(self, note_repository: NoteRepository):
         self._note_repository = note_repository
 
-    def get_user_id_notes(self, user_id: int) -> List[NoteModel]:
-        return self._note_repository.get_user_id_notes(user_id=user_id)
+    def get_user_id_notes(self, user_id: int, page: int, per_page: int) -> List[NoteModel]:
+        return self._note_repository.get_user_id_notes(user_id=user_id, page=page, per_page=per_page)
 
     def get_note(self, note_id: int) -> NoteModel:
         return self._note_repository.get_note_by_id(note_id=note_id)

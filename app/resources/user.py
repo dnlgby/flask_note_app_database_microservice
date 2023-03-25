@@ -2,6 +2,7 @@
 
 from http import HTTPStatus
 
+from flask import Response
 from flask.views import MethodView
 from flask_injector import inject
 from flask_smorest import Blueprint
@@ -28,7 +29,7 @@ class UserValidationView(UserView):
     @blp.arguments(UserSchema)
     @blp.response(HTTPStatus.OK, UserSchema)
     @view_exception_handler
-    def post(self, user_data: dict) -> UserModel:
+    def post(self, user_data: dict) -> Response:
         return self._user_service.validate_user(**user_data)
 
 
@@ -38,5 +39,5 @@ class UserCreationView(UserView):
     @blp.arguments(UserSchema)
     @blp.response(HTTPStatus.CREATED, UserSchema)
     @view_exception_handler
-    def post(self, user_data: dict) -> UserModel:
+    def post(self, user_data: dict) -> Response:
         return self._user_service.create_user(**user_data)
