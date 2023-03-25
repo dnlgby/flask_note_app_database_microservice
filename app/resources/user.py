@@ -26,10 +26,10 @@ class UserView(MethodView):
 class UserValidationView(UserView):
 
     @blp.arguments(UserSchema)
-    @blp.response(HTTPStatus.NO_CONTENT, UserSchema)
+    @blp.response(HTTPStatus.OK, UserSchema)
     @view_exception_handler
-    def post(self, user_data: dict) -> None:
-        self._user_service.validate_user(**user_data)
+    def post(self, user_data: dict) -> UserModel:
+        return self._user_service.validate_user(**user_data)
 
 
 @blp.route("/user")

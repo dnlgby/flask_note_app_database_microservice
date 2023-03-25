@@ -24,10 +24,11 @@ class UserRepository:
         return new_user
 
     @staticmethod
-    def validate_user(username: str, password: str) -> None:
+    def validate_user(username: str, password: str) -> UserModel:
         user = UserModel.query.filter_by(username=username).first()
         if not user:
             raise ItemNotFoundException("User with the name {username} is not found.".format(username=username))
         if not pbkdf2_sha256.verify(password, user.password):
             raise PasswordMatchError(
                 "Incorrect password for user {username} ".format(username=username))
+        return user

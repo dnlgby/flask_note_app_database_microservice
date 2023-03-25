@@ -12,7 +12,7 @@ class UserService:
     def __init__(self, user_repository: UserRepository):
         self._user_repository = user_repository
 
-    def validate_user(self, username: str, password: str) -> None:
+    def validate_user(self, username: str, password: str) -> UserModel:
         return self._user_repository.validate_user(username=username, password=password)
 
     def create_user(self, username: str, password: str) -> UserModel:
