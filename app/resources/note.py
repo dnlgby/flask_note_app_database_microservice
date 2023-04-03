@@ -2,7 +2,7 @@
 
 from http import HTTPStatus
 
-from flask import jsonify, request, Response
+from flask import jsonify, request
 from flask.views import MethodView
 from flask_injector import inject
 from flask_smorest import Blueprint
@@ -27,7 +27,7 @@ class NoteCreationView(NoteView):
     @blp.arguments(NoteSchema)
     @blp.response(HTTPStatus.CREATED, NoteSchema)
     @view_exception_handler
-    def post(self, note_data: dict) -> Response:
+    def post(self, note_data: dict):
         return self._note_service.create_note(**note_data)
 
 
@@ -36,18 +36,18 @@ class NoteItemView(NoteView):
 
     @blp.response(HTTPStatus.OK, NoteSchema)
     @view_exception_handler
-    def get(self, note_id: int) -> Response:
+    def get(self, note_id: int):
         return self._note_service.get_note(note_id=note_id)
 
     @blp.arguments(NoteUpdateSchema)
     @blp.response(HTTPStatus.OK, NoteSchema)
     @view_exception_handler
-    def patch(self, note_data: dict, note_id: int) -> Response:
+    def patch(self, note_data: dict, note_id: int):
         return self._note_service.update_note(note_id=note_id, **note_data)
 
     @blp.response(HTTPStatus.NO_CONTENT)
     @view_exception_handler
-    def delete(self, note_id: int) -> None:
+    def delete(self, note_id: int):
         self._note_service.delete_note(note_id=note_id)
 
 
@@ -56,13 +56,11 @@ class NoteListView(NoteView):
 
     @blp.response(HTTPStatus.OK)
     @view_exception_handler
-    def get(self, user_id: int) -> Response:
-
-        # Get request params
+    def get(self, user_id: int):
         page = request.args.get('page', 1, type=int)
         per_page = request.args.get('per_page', 10, type=int)
 
-        pagination = self._note_service.get_user_id_notes(user_id, page, per_page)
+        pagination = self._note_service.get_user_id_notes(user_id=user_id, page=page, per_page=per_page)
         notes = pagination.items
         notes_dto = NoteSchema(many=True)
 
